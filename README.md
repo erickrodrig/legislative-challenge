@@ -18,4 +18,4 @@ make new-install
 
 This will install all dependencies and create the migrations and ask you to create a new superuser.
 
-The project will be hosted at (http://127.0.0.1:8000/)[http://127.0.0.1:8000/].
+The project will be hosted at [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
