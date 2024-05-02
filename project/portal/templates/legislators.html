@@ -1,4 +1,26 @@
 {% extends "base.html" %} {% block title %} Legislators {% endblock %}
+{% load render_table from django_tables2 %}
 {% block content %}
-<p>this is legislators</p>
+<div class="mb-4 text-center">
+    <h4>Legislators supported and opposed bills</h4>
+</div>
+{% render_table table %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var table = document.getElementById('table-legislators');
+        if (table) {
+            let dataTable = new DataTable(table, {
+                responsive: true
+            });
+
+            let thLinks = table.querySelectorAll('.dataTable thead th a');
+
+            if (thLinks) {
+                thLinks.forEach(function(link) {
+                    link.classList.add('text-decoration-none', 'text-dark');
+                })
+            }
+        }
+    });
+</script>
 {% endblock %}

@@ -1,4 +1,16 @@
 {% extends "base.html" %} {% block title %} Upload Data {% endblock %}
 {% block content %}
-<p>this is upload</p>
+<div class="text-center ms-auto">
+    <h4>Import data by CSV file</h4>
+    <div class="mt-3">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <!-- <input class="form-control w-25 ms-auto me-auto mb-3" type="file"> -->
+            <button type="submit" class="btn btn-light border-1 border-dark-subtle w-25">Submit</button>
+        </form>
+    </div>
+</div>
+
+<div id="message"></div>
 {% endblock %}
