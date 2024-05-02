@@ -4,12 +4,18 @@ from django.db import models
 class Legislator(models.Model):
     name = models.CharField(max_length=80)
 
+    def __str__(self):
+        return self.name
+
 
 class Bill(models.Model):
     title = models.CharField(max_length=80)
     sponsor_id = models.ForeignKey(
         Legislator, verbose_name="Primary sponsor", on_delete=models.PROTECT
     )
+
+    def __str__(self):
+        return self.title
 
 
 class Vote(models.Model):
@@ -43,7 +49,7 @@ class BillDetail(models.Model):
     bill = models.ForeignKey(Bill, on_delete=models.PROTECT)
     supporters = models.IntegerField(default=0)
     opposers = models.IntegerField(default=0)
-    primary_sponsor = models.ForeignKey(Legislator, on_delete=models.CASCADE, blank=True)
+    primary_sponsor = models.ForeignKey(Legislator, on_delete=models.PROTECT, blank=True)
 
     def update_vote_count(self):
         votes = Vote.objects.filter(bill_id=self.bill.pk)
