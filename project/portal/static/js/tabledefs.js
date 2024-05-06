@@ -19,9 +19,5 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
             ]
         });
-
-        table.querySelectorAll('.dataTable thead th a').forEach(function (link) {
-            link.classList.add('text-decoration-none', 'text-light');
-        })
     }
 });
