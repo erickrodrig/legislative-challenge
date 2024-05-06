@@ -1,21 +1,27 @@
 # Legislative Coding Challenge (not finished)
 
-A brief description of what this project does and who it's for
+This project is a coding challenge to deal with legislative data.
 
 ## Installation
 
-cd into the nested `project` folder
+System equirements:
+
+- Python >= 3.10
+- Poetry
+
+
+### Clone the repository
 
 ```bash
-cd project
+git clone git@github.com:erickrodrig/legislative-challenge.git && cd legislative-challenge
 ```
 
-and run:
+Then, install project dependencies with:
 
 ```bash
 make new-install
 ```
 
-This will install all dependencies and create the migrations and ask you to create a new superuser.
+This will install all dependencies, create the migrations and prompt you to create a new superuser.
 
-The project will be hosted at [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
+The project will be running at [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
