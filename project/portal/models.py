@@ -17,7 +17,7 @@ class Legislator(models.Model):
 
 
 class Bill(models.Model):
-    title = models.CharField(max_length=80)
+    title = models.CharField(max_length=80, unique=True, null=True)
     sponsor_id = models.ForeignKey(
         to=Legislator, 
         verbose_name="Primary sponsor", 
