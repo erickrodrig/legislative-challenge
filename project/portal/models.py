@@ -13,7 +13,7 @@ class Legislator(models.Model):
         return VoteResult.objects.filter(legislator_id=self.pk, vote_type=2).count() or "-"
 
     def __str__(self):
-        return self.name or '-'
+        return self.name or "-"
 
 
 class Bill(models.Model):

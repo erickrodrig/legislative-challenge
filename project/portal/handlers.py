@@ -1,15 +1,15 @@
-import pandas as pd
-import tempfile
-from io import StringIO, BytesIO
-from pathlib import Path
-from .models import Legislator, Bill, Vote, VoteResult
 from collections import Counter
 
+import pandas as pd
+from django.db.models import Model
+
+from .models import Bill, Legislator, Vote, VoteResult
 
 DEFAULT_IMPORTABLE_TABLES = [Legislator, Bill, Vote, VoteResult]
 
 
-def file_input_handler(bytes_data: bytes) -> bool:
+# TODO: move to a service class.
+def handle_input_file(bytes_data: bytes) -> tuple[bool, dict | None, Model | None]:
     df = pd.read_csv(bytes_data)
     column_names = df.columns.tolist()
 
@@ -17,14 +17,13 @@ def file_input_handler(bytes_data: bytes) -> bool:
         model_fields = [f.name for f in model._meta.fields]
 
         if lists_have_same_elements(column_names, model_fields):
-            records = df.to_dict(orient='records')
-            
+            records = df.to_dict(orient="records")
+
             legislator_field = [
-                col for col in ['legislator_id', 'sponsor_id']
-                if col in column_names
+                col for col in ["legislator_id", "sponsor_id"] if col in column_names
             ]
-            bill_field = 'bill_id' if 'bill_id' in column_names else None
-            vote_field = 'vote_id' if 'vote_id' in column_names else None
+            bill_field = "bill_id" if "bill_id" in column_names else None
+            vote_field = "vote_id" if "vote_id" in column_names else None
 
             for rec in records:
                 if legislator_field:
@@ -41,11 +40,13 @@ def file_input_handler(bytes_data: bytes) -> bool:
                     vote_id = rec.get(vote_field)
                     vote, _ = Vote.objects.get_or_create(id=vote_id)
                     rec[vote_field] = vote
-                
-                id_field = rec.pop('id')
-                model.objects.update_or_create(id=id_field, defaults=rec)
-            return True
-    return False
+
+                rec_copy = rec.copy()
+                id_field = rec_copy.pop("id")
+                model.objects.update_or_create(id=id_field, defaults=rec_copy)
+            return True, model, records
+    return False, None, None
+
 
 def lists_have_same_elements(list1: list[str], list2: list[str]) -> bool:
     return Counter(list1) == Counter(list2)

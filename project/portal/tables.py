@@ -1,11 +1,9 @@
-from django_tables2 import Table, Column
-from .models import Legislator, Bill
+from django.db.models import Model
+from django_tables2 import Column, Table
 
+from .models import Bill, Legislator
 
-TABLE_ATTRS = {
-    'id': 'table',
-    'class': 'table table-striped table-hover'
-}
+TABLE_ATTRS = {"id": "table", "class": "table table-striped table-hover"}
 
 
 class BillDetailTable(Table):
@@ -17,6 +15,7 @@ class BillDetailTable(Table):
         model = Bill
         attrs = TABLE_ATTRS
 
+
 class LegislatorDetailTable(Table):
     name = Column()
     supported_bills = Column()
@@ -25,3 +24,12 @@ class LegislatorDetailTable(Table):
     class Meta:
         model = Legislator
         attrs = TABLE_ATTRS
+
+
+def get_table_for(model_class: Model, data: dict) -> Table:
+    class GenericTable(Table):
+        class Meta:
+            model = model_class
+            attrs = TABLE_ATTRS
+
+    return GenericTable(data)
