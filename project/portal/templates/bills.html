@@ -8,8 +8,12 @@
 
 {% block content %}
 <div class="mb-4 text-center border p-4 border-black-subtle rounded-3">
-    <h4 class="mb-4">Bills supporters and opposers count</h4>
-    {% render_table table %}
+    {% if table.data %}
+        <h4 class="mb-4">Bills supporters and opposers count</h4>
+        {% render_table table %}
+    {% else %}
+        <h4>No records found.</h4>
+    {% endif %}
 </div>
 
 <script src="{% static 'js/tabledefs.js' %}"></script>
