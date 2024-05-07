@@ -1,19 +1,24 @@
+from django.http import HttpResponse
 from django.shortcuts import render
-from . import models, tables, forms
+
 from .forms import UploadFile
 from .handlers import file_input_handler
-from django.http import HttpResponse
+from .models import Bill, Legislator
+from .tables import BillDetailTable, LegislatorDetailTable
+
 
 def home(request):
     return render(request, "home.html")
 
 def bills(request):
-    values = tables.BillDetailTable(models.BillDetail.objects.all())
-    return render(request, "bills.html", {"table": values})
+    values = Bill.objects.all()
+    table = BillDetailTable(values)
+    return render(request, "bills.html", {"table": table})
 
 def legislators(request):
-    values = tables.LegislatorBillTable(models.LegislatorBill.objects.all())
-    return render(request, "legislators.html", {"table": values})
+    values = Legislator.objects.all()
+    table = LegislatorDetailTable(values)
+    return render(request, "legislators.html", {"table": table})
 
 def upload(request):
     form = UploadFile(request.POST, request.FILES)
