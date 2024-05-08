@@ -1,10 +1,10 @@
-# Legislative Coding Challenge (not finished)
+# Legislative Coding Challenge
 
 This project is a coding challenge to deal with legislative data.
 
 ## Installation
 
-System equirements:
+System requirements:
 
 - Python >= 3.10
 - Poetry
