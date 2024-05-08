@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "project.portal",
     "project.api",
+    "project.authentication",
     "django_tables2",
     "rest_framework",
 ]
@@ -129,3 +130,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 STATICFILES_DIR = [
     BASE_DIR / "static"
 ]
+LOGIN_URL = '/auth/login/'
