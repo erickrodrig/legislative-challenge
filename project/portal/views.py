@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render
 
 from .forms import UploadFile
@@ -27,6 +27,7 @@ def legislators(request):
 
 
 @login_required
+@user_passes_test(lambda u: u.is_superuser, login_url="/")
 def upload(request):
     form = UploadFile(request.POST, request.FILES)
     if form.is_valid():
